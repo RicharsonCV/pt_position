@@ -36,20 +36,39 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
+  router: {
+    middleware: ['auth']
+  },
+
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next'
   ],
+
+  axios: {
+    credentials: true,
+    baseURL: 'http://localhost/',
+    withCredentials: true
+  },
+
   auth: {
-    // Options
+    strategies: {
+      api: {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost',
+        endpoints: {
+          login: {url: '/login'}
+        }
+      },
+    }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {
-      dark: true,
+      dark: false,
       themes: {
         dark: {
           primary: colors.blue.darken2,
@@ -65,5 +84,7 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['@amcharts/amcharts5']
+  },
 }
